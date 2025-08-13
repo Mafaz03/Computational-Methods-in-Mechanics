@@ -1,24 +1,29 @@
 clc
 clear
 
-%% Lagrange's Interpolation Function
 function [sum] = LI(xs, ys, number)
-    % Straight forward brute force way to find l
+    % This function performs Lagrange interpolation.
+    % Inputs:
+    %   xs - vector of x values (data points)
+    %   ys - vector of y values (data points)
+    %   number - the x value at which to evaluate the interpolation
+    % Output:
+    %   sum - the interpolated y value at the given x (number)
+
     l = [];
     
     for j = 1:length(xs)
         a = 1;
         c = 1;
         for i = 1:length(xs)
-            if i ~= j       % Or else it will always give 0
-                a = a * (number - xs(i));  % Calculating Numerator and Denominator differently
+            if i ~= j
+                a = a * (number - xs(i));
                 c = c * (xs(j) - xs(i));
             end
         end
-        l(j) = a / c;      
+        l(j) = a / c; 
     end
     
-    % This calculates l0 x y0 + l1 x y1 + ....
     sum = 0;
     for i = 1: length(l)
         sum = sum + (ys(i) * l(i));
@@ -43,7 +48,7 @@ end
 plot(test_xs, test_ys, '--b', 'LineWidth', 1.5, 'DisplayName', 'Predicted Data points');
 xlabel('X values');
 ylabel('Y values');
-title("Lagrange's Interpolation", 'FontSize', 25);
+title("Langrang's Interpolation", 'FontSize', 25);
 
 hold on
 
