@@ -6,9 +6,12 @@
 clc
 clear
 
-plot_arr = [];
+number = 5;         % x: where we want to find e(x)
 
-number = 5;
+
+plot_arr = [];      % TO plot relative error wrt to itterations
+
+
 tolerence = 5e-10;
 
 sum = 1;
