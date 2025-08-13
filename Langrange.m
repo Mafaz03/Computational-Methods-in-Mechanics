@@ -1,7 +1,15 @@
+%% Assignemnt
+% Lagrange's Interpolation
+
+% Name        : Mohamed Mafaz
+% Roll Number : AM25M009
+% Depatment   : Applied Mechanics
+
+
+%% Lagrange's Interpolation Function
 clc
 clear
 
-%% Lagrange's Interpolation Function
 function [sum] = LI(xs, ys, number)
     % Straight forward brute force way to find l
     l = [];

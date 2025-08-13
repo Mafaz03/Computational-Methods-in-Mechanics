@@ -62,8 +62,6 @@ function [] = D2B(number, precision)
     end
 
     if digit_count >= precision
-        fprintf(" (Precision reached: %d digits)", precision);
-    end
     
     fprintf("\n")
 end

@@ -1,4 +1,6 @@
 %% Assignemnt
+% Maclaurin Series
+
 % Name        : Mohamed Mafaz
 % Roll Number : AM25M009
 % Depatment   : Applied Mechanics
@@ -6,19 +8,20 @@
 clc
 clear
 
-number = 5;         % x: where we want to find e(x)
+number = 0.2*pi;    % x: where we want to find e(x)
 
 
-plot_arr = [];      % TO plot relative error wrt to itterations
+plot_arr = [];      % To plot relative error wrt to itterations
 
-
-tolerence = 5e-10;
+tolerence = 5e-9;
 
 sum = 1;
 loop_completed = 0;
 maximum_loops = 100; % So i can break out if the code goes to an infinite Loop, mostly for debugging
 
 actual = exp(number);
+
+%% Maclaurin Series
 i = 1;     % Starting from 2nd factor, since 1 is always present
 
 while 1
@@ -43,12 +46,12 @@ end
 
 %% Printing Stats
 fprintf("relative_error: %.10f\n", relative_error)
-fprintf("Loops taken   : %d\n", loop_completed)
+fprintf("Terms used   : %d\n", loop_completed+1)
 fprintf("Predicted     : %.10f\n", sum)
 fprintf("Actual        : %.10f\n", exp(number))
 
 %% Plotting Relative error
-plot(1:length(plot_arr), plot_arr);
+plot(1:length(plot_arr), plot_arr, '-o');
 title('Error vs Itterations', 'FontSize', 25)
-xlabel("Itteration")
+xlabel("Number of Terms")
 ylabel("Realtive erorr")

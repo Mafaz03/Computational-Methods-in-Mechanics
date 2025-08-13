@@ -1,8 +1,16 @@
-clc
-clear
+%% Assignemnt
+% Newton's Interpolation
+
+% Name        : Mohamed Mafaz
+% Roll Number : AM25M009
+% Depatment   : Applied Mechanics
+
 
 
 %% Function that finds slope
+clc
+clear
+
 function [slope] = divided_difference(y2, y1, x2, x1)
     slope = (y2 - y1) / (x2 - x1);
 
