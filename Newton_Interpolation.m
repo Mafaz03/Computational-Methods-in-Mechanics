@@ -16,7 +16,6 @@ function [slope] = divided_difference(y2, y1, x2, x1)
 
 end
 
-%% Newton's Interpolation
 function [sum] = NI(x, y, number)
 
     % The idea:
@@ -52,18 +51,36 @@ function [sum] = NI(x, y, number)
     end
 end
 
+%% Newton's Basis
+function [prod] = Newton_Basis(xs, basis, number)
+    prod = 1;
+    for i = 1: basis
+        prod = prod * (number - xs(i));
+    end
+end
+
 
 %% Using the function
-x = [1,  2,    3,    3.2,    3.9];
-y = [1,  5,    2,    7,      4];
+x = [4.0, 5.0, 6.0, 7.0, 8.0];
+y = [1.58740105, 1.709976, 1.81712059, 1.912931, 2.0];
 
 sample_points = 50;
 
 % Predicting
-test_xs = linspace(1, x(end), sample_points);
+test_xs = linspace(min(x), max(x), sample_points);
 test_ys = [];
 for i = 1: sample_points
     test_ys = [test_ys, NI(x, y, test_xs(i)) ];
+end
+
+
+for j = 1: length(x)
+    test_ys_poly = zeros(1, sample_points);
+    for i = 1: sample_points
+        test_ys_poly(i) = Newton_Basis(x, j, test_xs(i));
+    end
+     plot(test_xs, test_ys_poly, 'LineWidth', 1.5, 'DisplayName', sprintf('P_{%d}(x)', j));
+    hold on
 end
 
 % Plotting predicted Data
@@ -75,7 +92,7 @@ title("Newton's Interpolation", 'FontSize', 25);
 hold on
 
 % Plotting actual Data
-plot(x, y, 'g', 'LineWidth', 1.5, 'DisplayName', 'Actual Data points', Marker='x', MarkerSize=20);
+plot(x, y, 'LineWidth', 1, 'DisplayName', 'Actual Data points', Marker='x', MarkerSize=12);
 
 legend show
 grid on;

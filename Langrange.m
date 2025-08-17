@@ -33,7 +33,7 @@ function [sum] = LI(xs, ys, number)
     end
 end
 
-
+%% Lagrange_Basis
 function [L] = Lagrange_Basis(xs, j, number)
     L = ones(size(number));
     n = length(xs)
