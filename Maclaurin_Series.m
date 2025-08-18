@@ -1,12 +1,12 @@
-%% Assignemnt
-% Maclaurin Series
-
+%% Student Details
+% Roll number : AM25M009
 % Name        : Mohamed Mafaz
-% Roll Number : AM25M009
-% Depatment   : Applied Mechanics
+% Assignment  : Maclaurin Series and error approximation
+% Department  : Applied Mechanics
 
-clc
-clear
+
+clc;
+clear;
 
 number = 0.2*pi;    % x: where we want to find e(x)
 
@@ -21,7 +21,9 @@ maximum_loops = 100; % So i can break out if the code goes to an infinite Loop, 
 
 actual = exp(number);
 
-%% Maclaurin Series
+
+%% Part 1 (Preprocessing / Writing Serie's loop)
+% Maclaurin Series
 i = 1;     % Starting from 2nd factor, since 1 is always present
 
 while 1
@@ -44,13 +46,16 @@ while 1
     i = i + 1;
 end
 
-%% Printing Stats
+%% Part 2 (Processing / Using the Loop)
+% Printing Stats
 fprintf("relative_error: %.10f\n", relative_error)
 fprintf("Terms used   : %d\n", loop_completed+1)
 fprintf("Predicted     : %.10f\n", sum)
 fprintf("Actual        : %.10f\n", exp(number))
 
-%% Plotting Relative error
+
+%% Part 3 (post processing or plots or results)
+% Plotting Relative error
 plot(1:length(plot_arr), plot_arr, '-o');
 title('Error vs Itterations', 'FontSize', 25)
 xlabel("Number of Terms")

@@ -2,7 +2,7 @@
 % Roll number : AM25M009
 % Name        : Mohamed Mafaz
 % Assignment  : Newton's Interpolation
-% Depatment   : Applied Mechanics
+% Department   : Applied Mechanics
 
 
 
@@ -90,7 +90,7 @@ xlabel('X values');
 ylabel('Y values');
 title("Newton's Interpolation", 'FontSize', 25);
 
-hold on
+hold on;
 
 % Plotting actual Data
 plot(x, y, 'LineWidth', 1, 'DisplayName', 'Actual Data points', Marker='x', MarkerSize=12);

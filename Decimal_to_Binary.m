@@ -1,12 +1,14 @@
-%% Assignemnt
-% Decimal to Binary
-
+%% Student Details
+% Roll number : AM25M009
 % Name        : Mohamed Mafaz
-% Roll Number : AM25M009
-% Depatment   : Applied Mechanics
+% Assignment  : Decimal to Binary up to 8-bit precision
+% Department   : Applied Mechanics
 
-clc
-clear
+
+clc;
+clear;
+
+%% Part 1 (Preprocessing / Writing Functions)
 
 function [] = D2B(number, precision)
     
@@ -69,7 +71,7 @@ function [] = D2B(number, precision)
 end
 
 
-% Main
+%% Part 2 (Processing / Using the function)
 
 numbers = [5.625, 0.8925, 205, 124.456];
 
