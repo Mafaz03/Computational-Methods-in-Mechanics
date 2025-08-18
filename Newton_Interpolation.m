@@ -1,15 +1,15 @@
-%% Assignemnt
-% Newton's Interpolation
-
+%% Student Details
+% Roll number : AM25M009
 % Name        : Mohamed Mafaz
-% Roll Number : AM25M009
+% Assignment  : Newton's Interpolation
 % Depatment   : Applied Mechanics
 
 
 
-%% Function that finds slope
-clc
-clear
+%% Part 1 (Preprocessing / Writing Functions)
+% Function that finds slope
+clc;
+clear;
 
 function [slope] = divided_difference(y2, y1, x2, x1)
     slope = (y2 - y1) / (x2 - x1);
@@ -22,7 +22,6 @@ function [sum] = NI(x, y, number)
     % Intead of using matrix to store all the data, we use a single vector
     % and overwrite it, since the non diagonol hold no value to us for this
     % problem, I overwrite the y array itself
-
 
 
     as = [];         % a's are array of the coefficients
@@ -60,7 +59,7 @@ function [prod] = Newton_Basis(xs, basis, number)
 end
 
 
-%% Using the function
+%% Part 2 (Processing / Using the function)
 x = [4.0, 5.0, 6.0, 7.0, 8.0];
 y = [1.58740105, 1.709976, 1.81712059, 1.912931, 2.0];
 
@@ -73,7 +72,7 @@ for i = 1: sample_points
     test_ys = [test_ys, NI(x, y, test_xs(i)) ];
 end
 
-
+% Processing and Plotting Newton Polynomial)
 for j = 1: length(x)
     test_ys_poly = zeros(1, sample_points);
     for i = 1: sample_points
@@ -82,6 +81,8 @@ for j = 1: length(x)
      plot(test_xs, test_ys_poly, 'LineWidth', 1.5, 'DisplayName', sprintf('P_{%d}(x)', j));
     hold on
 end
+
+%% Part 3 (post processing or plots or results)
 
 % Plotting predicted Data
 plot(test_xs, test_ys, '--b', 'LineWidth', 1.5, 'DisplayName', 'Predicted Data points');
