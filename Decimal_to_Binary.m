@@ -1,8 +1,8 @@
-%% Student Details
+% Student Details
 % Roll number : AM25M009
 % Name        : Mohamed Mafaz
 % Assignment  : Decimal to Binary up to 8-bit precision
-% Department   : Applied Mechanics
+% Department  : Applied Mechanics
 
 
 clc;

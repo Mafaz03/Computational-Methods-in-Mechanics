@@ -59,6 +59,12 @@ for i = 1:sample_points
     test_ys(i) = LI(x, y, test_xs(i));
 end
 
+% Printing Error
+total_error = 0;
+for i = 1:length(x)
+    total_error = total_error + (abs(y(i) - LI(x, y, x(i))));
+end
+fprintf("Total error: %d\n", total_error);
 
 %% Part 3 (post processing or plots or results)
 
@@ -73,7 +79,6 @@ plot(test_xs, test_ys, '--', 'LineWidth', 1.5, 'DisplayName', 'Predicted Data po
 xlabel('X values');
 ylabel('Y values');
 title("Lagrange's Interpolation", 'FontSize', 25);
-
 
 
 hold on

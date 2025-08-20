@@ -72,6 +72,13 @@ for i = 1: sample_points
     test_ys = [test_ys, NI(x, y, test_xs(i)) ];
 end
 
+% Printing Error
+total_error = 0;
+for i = 1:length(x)
+    total_error = total_error + (abs(y(i) - NI(x, y, x(i))));
+end
+fprintf("Total error: %d\n", total_error);
+
 % Processing and Plotting Newton Polynomial)
 for j = 1: length(x)
     test_ys_poly = zeros(1, sample_points);
