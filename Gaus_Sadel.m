@@ -45,7 +45,7 @@ while (relative_error > tolerence) || loops_taken == 0
         sum = 0;
         for i = 1:length(A)
             if i ~= j
-                sum = sum + (A(j, i) * X(i));
+                sum = sum + (A(j, i) * X_new(i));
             end
         end
         X_new(j) = (B(j) - sum) / A(j, j);
