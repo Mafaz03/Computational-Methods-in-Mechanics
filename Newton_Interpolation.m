@@ -1,9 +1,9 @@
-%% Student Details
-% Roll number : AM25M009
-% Name        : Mohamed Mafaz
-% Assignment  : Newton's Interpolation
-% Department   : Applied Mechanics
+%% Assignemnt
+% Newton's Interpolation
 
+% Name        : Mohamed Mafaz
+% Roll Number : AM25M009
+% Department  : Applied Mechanics
 
 
 %% Part 1 (Preprocessing / Writing Functions)

@@ -20,7 +20,7 @@ function [sum] = LI(xs, ys, number)
         denominator = 1;
         for i = 1:length(xs)
             if i ~= j       % Or else it will always give 0
-                numerator = numerator * (number - xs(i));  % Calculating Numerator and Denominator differently
+                numerator = numerator * (number - xs(i));    % Calculating Numerator and Denominator differently
                 denominator = denominator * (xs(j) - xs(i));
             end
         end
@@ -49,6 +49,8 @@ end
 
 x = [4.0, 5.0, 6.0, 7.0, 8.0];
 y = [1.58740105, 1.709976, 1.81712059, 1.912931, 2.0];
+
+
 sample_points = 50;
 
 % Predicting
