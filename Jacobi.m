@@ -33,7 +33,7 @@ function [] = Diag_dom(A)
                 sum = sum + abs(A(j, i)); % abs value of sum of non diagnoal elements
             end
         end
-        if sum > abs(A(j, j)) % Comparing to diagnol elements
+        if sum > abs(A(j, j))             % Comparing to diagnol elements
             diag_dom = diag_dom + 1
         end
     end
@@ -53,17 +53,19 @@ while (relative_error > tolerence) || loops_taken == 0
         sum = 0;
         for i = 1:length(A)
             if i ~= j
-                sum = sum + (A(j, i) * X(i));
+                sum = sum + (A(j, i) * X(i));                % Sum of non diagnol elements               
             end
         end
-        X_new(j) = (B(j) - sum) / A(j, j);
+        X_new(j) = (B(j) - sum) / A(j, j);                   % b - sum
+                                                             % Jacobi doesnt use new values right away in the same loop
     end
 
-    relative_error = max(abs(X_new - X) ./ (X_new + 1e-9));
+    relative_error = max(abs(X_new - X) ./ (X_new + 1e-9));  % Calculating relative error
 
-    X = X_new;
+    X = X_new;                                               % Copying new array to actual array of initial guesses
     loops_taken = loops_taken + 1;
-
+    
+    %% Part 3 (post processing)
     % Printing it out
     fprintf("Loop: %d   |", loops_taken)
     for i = 1:length(X)

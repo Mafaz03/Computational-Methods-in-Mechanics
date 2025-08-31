@@ -1,5 +1,5 @@
-%% Assignemnt
-% Gaus Sadel Itterator
+%% Assignment
+% Gauss Seidel Iterator with rounding
 
 % Name        : Mohamed Mafaz
 % Roll Number : AM25M009
@@ -8,38 +8,33 @@
 clc;
 clear;
 
-loops_taken = 0;
+A = [1/1   1/2  1/3 1/4;     % A Matrix
+     1/2   1/3  1/4 1/5; 
+     1/3   1/4  1/5 1/6;
+     1/4   1/5  1/6 1/7];
 
-A = [4   1  -1;     % A Matrix
-     1  -5  -1; 
-     2  -1  -6];
+B = [25/12; 77/60; 57/60; 319/420];   % B Matrix
 
-B = [13; -8; -2];   % B Matrix
-
-X = [0; 0; 0];      % Initial Guess
-X_new = [0; 0; 0];
-
-tolerence = 1e-12;
-relative_error = 0;
+X = zeros(1, length(B));      % Initial Guess
+tolerance = 1e-12;
 
 %% Part 1 (Preprocessing)
-% Checking if Diagonally Dominant
 function [] = Diag_dom(A)
     diag_dom = 0;
     for j = 1:length(A)
         sum = 0;
         for i = 1:length(A)
             if i ~= j
-                sum = sum + abs(A(j, i)); % abs value of sum of non diagnoal elements
+                sum = sum + abs(A(j, i)); % abs value of sum of non diagonal elements
             end
         end
-        if sum > abs(A(j, j))             % Comparing to diagnol elements
-            diag_dom = diag_dom + 1
+        if sum > abs(A(j, j))
+            diag_dom = diag_dom + 1;
         end
     end
     
     if diag_dom > 0
-        fprintf('Matrix is not Diagonally dominant :(\n\n')
+        fprintf('Matrix is NOT Diagonally dominant :(\n\n')
     else
         fprintf('Matrix is Diagonally dominant :)\n\n')
     end
@@ -47,33 +42,55 @@ end
 
 Diag_dom(A)
 
-%% Part 2 (Processing)
-while (relative_error > tolerence) || loops_taken == 0
-    for j = 1:length(A)
-        sum = 0;
-        for i = 1:length(A)
-            if i ~= j
-                sum = sum + (A(j, i) * X_new(i));            % Sum of non diagnol elements
+%% Part 2 (Gauss-Seidel Function with rounding)
+function [loops_taken, relative_error, X] = Gauss_Sadel(A, B, X, tolerance, sig)
+    relative_error = Inf;
+    loops_taken = 0;
+
+    while (relative_error > tolerance)
+        X_old = X;
+        for j = 1:length(A)
+            sum = 0;
+            for i = 1:length(A)
+                if i ~= j
+                    % multiply then round
+                    temp = A(j,i) * X(i);
+                    temp = round(temp, sig, 'significant');
+                    sum = round(sum + temp, sig, 'significant');  % Rounding of significant digits
+                end
             end
+            % numerator and division with rounding
+            num = round(B(j) - sum, sig, 'significant');
+            X(j) = round(num / A(j,j), sig, 'significant');
         end
-        X_new(j) = (B(j) - sum) / A(j, j);                   % b - sum
-                                                             % Gauss sadel uses new values right away in the same loop
-    end
+        
+        % relative error (use rounding too)
+        relative_error = max(abs(X - X_old) ./ (X + 1e-9));
+        loops_taken = loops_taken + 1;
 
-    relative_error = max(abs(X_new - X) ./ (X_new + 1e-9));  % Calculating relative error
-
-    X = X_new;                                               % Copying new array to actual array of initial guesses
-    loops_taken = loops_taken + 1;
-    
-    %% Part 3 (post processing)
-    % Printing it out
-    fprintf("Loop: %d   |", loops_taken)
-    for i = 1:length(X)
-        fprintf("   X_%d: %f   |   ", i, X(i))
+        % Printing progress
+        % fprintf("Loop: %d   |", loops_taken)
+        % for i = 1:length(X)
+        %     fprintf("   X_%d: %.6f   |   ", i, X(i))
+        % end
+        % fprintf("\n")
     end
-    fprintf("\n")
+    if relative_error < tolerance
+        fprintf("Loop: %d   |", loops_taken)
+        for i = 1:length(X)
+            fprintf("   X_%d: %.6f   |   ", i, X(i))
+        end
+    end    
 end
 
-fprintf("\nLoops Taken: %d\n", loops_taken)
-fprintf("\nRelative Error: %d\n", relative_error)
+%% Part 3 (Post Processing)
 
+% 3 sig
+fprintf("\n=== Gauss-Seidel with 3 significant digits ===\n")
+[loops3, rel3, X3] = Gauss_Sadel(A, B, X, tolerance, 3);
+fprintf("Loops: %d | Relative error: %e\n", loops3, rel3)
+
+% 6 sig
+fprintf("\n=== Gauss-Seidel with 6 significant digits ===\n")
+[loops6, rel6, X6] = Gauss_Sadel(A, B, X, tolerance, 6);
+fprintf("Loops: %d | Relative error: %e\n", loops6, rel6)
