@@ -7,9 +7,9 @@ f = @(x) (x-1) * (x-2) * (x-3);
 a = -100;
 b = 100;
 
-tolerance = 1e-;
+tolerance = 1e-5;
 
-c = (b + a)/2;
+c = b - ((f(b) * (b - a)) / (f(b) - f(a)))
 
 while abs(f(c)) > tolerance
     if f(a) * f(c) < 0
@@ -17,7 +17,7 @@ while abs(f(c)) > tolerance
     else
         a = c;
     end
-    c = (b + a) / 2;
+    c = b - ((f(b) * (b - a)) / (f(b) - f(a)))
     loop = loop + 1;
     fprintf("Loop: %d | c: %f\n", loop, c)
 end
