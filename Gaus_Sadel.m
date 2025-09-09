@@ -62,7 +62,8 @@ function [loops_taken, relative_error, X] = Gauss_Sadel(A, B, X, tolerance, sig)
             end
             % numerator and division with rounding
             % num = round(B(j) - sum, sig, 'significant');
-            X(j) = round((B(j) - sum) / A(j,j), sig, 'significant');
+            % X(j) = round((B(j) - sum) / A(j,j), sig, 'significant');
+            X(j) = vpa((B(j) - sum) / A(j,j), sig);
         end
         
         % relative error (use rounding too)
