@@ -8,14 +8,14 @@
 clc;
 clear;
 
-A = [1/1   1/2  1/3 1/4;               % A Matrix
+A = [1/1   1/2  1/3 1/4;     % A Matrix
      1/2   1/3  1/4 1/5; 
      1/3   1/4  1/5 1/6;
      1/4   1/5  1/6 1/7];
 
 B = [25/12; 77/60; 57/60; 319/420];   % B Matrix
 
-X = zeros(1, length(B));              % Initial Guess
+X = zeros(1, length(B));      % Initial Guess
 tolerance = 1e-12;
 
 %% Part 1 (Preprocessing)
@@ -54,19 +54,17 @@ function [loops_taken, relative_error, X] = Gauss_Sadel(A, B, X, tolerance, sig)
             for i = 1:length(A)
                 if i ~= j
                     % multiply then round
-                    sum = sum + A(j,i) * X(i);
-                    % temp = A(j,i) * X(i);
-                    % temp = round(temp, sig, 'significant');
-                    % sum  = round(sum + temp, sig, 'significant');  % Rounding of significant digits
+                    temp = A(j,i) * X(i);
+                    sum = sum + temp;
                 end
             end
             % numerator and division with rounding
-            % num = round(B(j) - sum, sig, 'significant');
-            X(j) = round((B(j) - sum) / A(j,j), sig, 'significant');
+            
+            num = B(j) - sum;
+            X(j) = round(num / A(j,j), sig, 'significant');
         end
         
-        % relative error (use rounding too)
-        relative_error = max(abs(X - X_old) ./ (X + 1e-9));
+        relative_error = max(abs((X - X_old) ./ X));
         loops_taken = loops_taken + 1;
 
     end
@@ -83,9 +81,9 @@ end
 % 3 sig
 fprintf("\n=== Gauss-Seidel with 3 significant digits ===\n")
 [loops3, rel3, X3] = Gauss_Sadel(A, B, X, tolerance, 3);
-fprintf("Relative error: %e\n", rel3)
+fprintf("Loops: %d | Relative error: %e\n", loops3, rel3)
 
 % 6 sig
 fprintf("\n=== Gauss-Seidel with 6 significant digits ===\n")
 [loops6, rel6, X6] = Gauss_Sadel(A, B, X, tolerance, 6);
-fprintf("Relative error: %e\n", rel6)
+fprintf("Loops: %d | Relative error: %e\n", loops6, rel6)

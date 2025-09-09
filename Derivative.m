@@ -2,9 +2,10 @@ clc;
 clear;
 close all;
 
-f = @(x) cos(x);
+f = @(x) cos(x); 
+f = @(x) exp(-2*x) - x; 
 f_actual = @(x) -sin(x);
-x = 1;
+x = 2;
 
 function [val] = forward_method(f, x, h)
     val = (f(x+h) - f(x))/h;
@@ -20,7 +21,7 @@ end
 
 
 steps = 50;
-hs = logspace(-15, -1, steps);
+hs = logspace(-2, -, steps);
 
 error_forward = zeros(1, steps);
 error_backward = zeros(1, steps);
