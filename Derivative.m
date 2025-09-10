@@ -3,7 +3,7 @@ clear;
 close all;
 
 f = @(x) cos(x); 
-f = @(x) exp(-2*x) - x; 
+% f = @(x) exp(-2*x) - x; 
 f_actual = @(x) -sin(x);
 x = 2;
 
@@ -16,12 +16,12 @@ function [val] = backward_method(f, x, h)
 end
 
 function [val] = central_method(f, x, h)
-    val = ( f(x+h) - f(x-h) ) / (2*h);
+    val = ( f(x+h) - f(x-h) ) / (2*h) ;
 end
 
 
 steps = 50;
-hs = logspace(-2, -, steps);
+hs = logspace(-2, -10, steps);
 
 error_forward = zeros(1, steps);
 error_backward = zeros(1, steps);
