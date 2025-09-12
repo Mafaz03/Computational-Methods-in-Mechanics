@@ -50,6 +50,7 @@ loglog(hs, error_central, 'DisplayName', 'Central error')
 
 
 legend show;
+grid on;
 xlabel('h');
 ylabel('abs error');
 
