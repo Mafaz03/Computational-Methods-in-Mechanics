@@ -1,36 +1,19 @@
-clc; clear; close all;
+clc; clear;
 
-% Given functions
-f = @(x) exp(-2*x) - x;
-fp_actual = @(x) -2*exp(-2*x) - 1;
-x = 2;
+f  = @(x) exp(-2*x) - x;
+x0 = 2;
 
-hs = 10:-0.001:0.05; % Step sizes from 0.15 to 0.05
-num_steps = length(hs);
-error_central = zeros(1,num_steps);
-centralVal = zeros(1,num_steps);
+% exact derivative
+fprime_exact = -2*exp(-2*x0) - 1;
 
-for i = 1:num_steps
-    h = hs(i);
-    % Central difference calculation
-    centralVal(i) = (f(x+h) - f(x-h)) / (2*h);
-    error_central(i) = abs(centralVal(i) - fp_actual(x));
+% step sizes
+h_values = 0.5:-0.001:0.05;
+
+fprintf('%8s %15s %15s\n','h','Derivative','Abs_Error');
+fprintf('-----------------------------------------------\n');
+
+for h = h_values
+    fdash = ( f(x0 + h) - f(x0 - h) ) / (2*h);
+    err   = abs(fdash - fprime_exact);
+    fprintf('%8.3f %15.8f %15.8e\n', h, fdash, err);
 end
-
-% Display errors for h=0.5
-disp(['Central diff at h=0.5: ', num2str(centralVal(1)), ...
-      ', abs error: ', num2str(error_central(1))]);
-
-% Plot error vs h
-figure;
-plot(hs, error_central, 'LineWidth',2);
-xlabel('Step size h');
-ylabel('Absolute error');
-title('Central difference absolute error vs h');
-grid on;
-
-% Find the optimal step size (where error is minimized)
-[~, opt_idx] = min(error_central);
-optimal_h = hs(opt_idx);
-fprintf('Optimal step size is approximately h = %.4f with minimum abs error = %e\n', ...
-        optimal_h, error_central(opt_idx));

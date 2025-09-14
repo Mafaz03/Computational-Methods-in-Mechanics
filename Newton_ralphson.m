@@ -1,38 +1,40 @@
-clc
-clear
+clc;
+clear;
+close all;
 
+x0 = 10;
+tol = 1e-6;
+max_loop = 100;
+
+root_true = 1;
+
+syms x
+f_sym = (x-1) * (exp(x-1) - 1);
+df_sym = diff(f_sym);
+
+% Convert back to function 
+f = matlabFunction(f_sym);
+df = matlabFunction(df_sym);
+
+rel_error = inf;
 loop = 0;
-
-f = @(x) sin(10*x) + cos(3*x);
-a = 3;
-b = 6;
-
-tolerance = 1e-4;
-root_true = 3.74575;
-
-% Bracketting Method
-% Ensure the initial bracket is valid
-if f(a) * f(b) > 0
-    error('f(a) and f(b) must have opposite signs.');
-end
-
 
 iter_arr = [];  err_arr = [];
 
-c = (b + a)/2;
-while abs(f(c)) > tolerance
-    if f(a) * f(c) < 0
-        b = c;
-    else
-        a = c;
-    end
-    c = (b + a) / 2;
+while rel_error > tol
+    x1 = x0 - f(x0)/df(x0);
+    
+    rel_error = abs((x1 - x0) / x1);
+    
+    x0 = x1;
     loop = loop + 1;
-    iter_arr(loop) = loop;
-    err_arr(loop)  = abs(c - root_true);
 
-    fprintf("Loop: %d | c: %f\n", loop, c)
+    iter_arr(loop) = loop;
+    err_arr(loop)  = abs(x1 - root_true);
+
+    fprintf("Loop: %d | c: %f\n", loop, x1)
 end
+
 
 semilogy(iter_arr, err_arr, 'b-o', 'LineWidth',1.2); hold on;
 xlabel('Iteration');
@@ -51,5 +53,4 @@ end
 
 R_est = mean(Rvals);  % mean of last few
 fprintf('\n\nEstimated order R = %.4f\n', R_est);
-
 
