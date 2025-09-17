@@ -1,7 +1,15 @@
+%% Assignemnt - 4
+% Secant
+
+% Name        : Mohamed Mafaz
+% Roll Number : AM25M009
+% Department  : Applied Mechanics
+
 clc;
 clear;
 close all;
 
+%% Part 1 (Preprocessing)
 x0 = 10;
 x1 = 9; 
 tol = 1e-6;
@@ -16,6 +24,7 @@ loop = 0;
 iter_arr = [];
 err_arr = [];
 
+%% Part 2 (Processing)
 while rel_error > tol
     x2 = x1 - (f(x1) * (x1 - x0)) / (f(x1) - f(x0));
     
@@ -32,11 +41,13 @@ while rel_error > tol
     fprintf("Loop: %d | c: %f\n", loop, x2);
 end
 
+%% Part 3 (Post Processing / Plotting)
+
 % Plot true error in semilog scale
 semilogy(iter_arr, err_arr, 'b-s', 'LineWidth',1.2);
 xlabel('Iteration');
 ylabel('True Error |c - root|');
-title('True Error vs Iteration');
+title("True Error vs Iteration for root = 1");
 
 % Estimate order R from last few iterations
 Rvals = zeros(1,length(err_arr)-2);
