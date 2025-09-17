@@ -1,6 +1,5 @@
 clc
 clear
-close all
 
 loop = 0;
 
@@ -10,6 +9,13 @@ b = 6;
 
 tolerance = 1e-4;
 root_true = 3.74575;
+
+% Bracketting Method
+% Ensure the initial bracket is valid
+if f(a) * f(b) > 0
+    error('f(a) and f(b) must have opposite signs.');
+end
+
 
 iter_arr = [];  err_arr = [];
 

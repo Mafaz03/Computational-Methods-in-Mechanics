@@ -10,6 +10,7 @@ root_true = 1;
 
 syms x
 f_sym = (x-1) * (exp(x-1) - 1);
+% f_sym = (x-1)*(x-2);
 df_sym = diff(f_sym);
 
 % Convert back to function 
@@ -32,6 +33,7 @@ while rel_error > tol
     iter_arr(loop) = loop;
     err_arr(loop)  = abs(x1 - root_true);
 
+   
     fprintf("Loop: %d | c: %f\n", loop, x1)
 end
 

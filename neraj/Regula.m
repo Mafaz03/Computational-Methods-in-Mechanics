@@ -1,33 +1,41 @@
-clc
-clear
-close all
-
-loop = 0;
+clc;
+clear;
+close all;
 
 f = @(x) sin(10*x) + cos(3*x);
 a = 3;
 b = 6;
 
 tolerance = 1e-4;
-root_true = 3.74575;
+loop = 0;
 
-iter_arr = [];  err_arr = [];
+root_true = 5.67903;
 
-c = (b + a)/2;
+% Ensure the initial bracket is valid
+if f(a) * f(b) > 0
+    error('f(a) and f(b) must have opposite signs.');
+end
+
+% Initial c
+c = b - (f(b) * (b - a)) / (f(b) - f(a));
+
+iter_arr  = []; err_arr  = [];
+
 while abs(f(c)) > tolerance
     if f(a) * f(c) < 0
         b = c;
     else
         a = c;
     end
-    c = (b + a) / 2;
+    
+    c = b - (f(b) * (b - a)) / (f(b) - f(a));
     loop = loop + 1;
     iter_arr(loop) = loop;
     err_arr(loop)  = abs(c - root_true);
-
-    fprintf("Loop: %d | c: %f\n", loop, c)
+    fprintf('Loop: %d | c: %.8f | f(c): %.8e | err: %.8e\n', loop, c, f(c), abs(c - root_true));
 end
 
+fprintf('\nRoot ≈ %.8f found in %d iterations\n', c, loop);
 semilogy(iter_arr, err_arr, 'b-o', 'LineWidth',1.2); hold on;
 xlabel('Iteration');
 ylabel('True Error |c - root|');
@@ -45,5 +53,3 @@ end
 
 R_est = mean(Rvals);  % mean of last few
 fprintf('\n\nEstimated order R = %.4f\n', R_est);
-
-
