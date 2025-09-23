@@ -44,11 +44,6 @@ for i = 1:steps
     error_central_h4(i)  = abs(centralVal_h4 - f_actual(x));
 end
 
-disp(error_forward)
-disp(error_backward)
-disp(error_central)
-disp(error_central_h4)
-
 loglog(hs, error_forward, 'DisplayName', 'Forward error')
 hold on
 loglog(hs, error_backward, 'DisplayName', 'Backward error')
@@ -56,6 +51,11 @@ hold on
 loglog(hs, error_central, 'DisplayName', 'Central error')
 hold on
 loglog(hs, error_central_h4, 'DisplayName', 'Central error O(h^4)')
+
+fprintf("O(h) Forward hopt: %d\n", min(error_forward));
+fprintf("O(h) Backward hopt: %d\n", min(error_backward))
+fprintf("O(h^2) Central hopt: %d\n", min(error_central))
+fprintf("O(h^4) Central hopt: %d\n", min(error_central_h4))
 
 
 
