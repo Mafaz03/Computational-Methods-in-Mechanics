@@ -1,10 +1,11 @@
 clc;
 clear;
 
-f =@(x) exp(-x^2);
+% f =@(x) exp(-x^2);
+f =@(x) 1 / ((1+x^3)^-1);
 
-a = 0;
-b = 1;
+a = 1;
+b = 3;
 
 %% Single Step
 
@@ -23,10 +24,10 @@ h = (a + b)/3;
 simp_3_8_integral = ((3*h)/8) * (f(a) + (3 * f(a + h)) + (3 * f(a + 2*h)) + f(b));
 fprintf("Simpsion's 3/8th Single step: %f\n", simp_3_8_integral)
 
+
 %% Multiple Steps
 
 % Trapezoid
-
 M = 100;
 h = (b-a)/M;
 k_val = linspace(a, b, M);
@@ -40,18 +41,20 @@ fprintf("\n\nTrapezoid Multi step: %f\n", (h/2) * sum)
 
 
 % Simpsion's 1/3rd
-M = 100;
+M = 200;
 
 n = 2 * M; % n = 2M
-k_val = linspace(a, b, n);
+k_val = linspace(a, b, n/2);
 h = (b-a)/M;
 sum = 0;
-for k = 1:n
+
+for k = 1:n/2
     if mod(k, 2) == 0
         sum = sum + (2 * f(k_val(k)));
     else
         sum = sum + (4 * f(k_val(k)));
     end
 end
-simp_1_3_integral = (h/3) * (f(k_val(1)) + sum + f(k_val(end)));
+
+simp_1_3_integral = (h/3) * (f(a) + sum + f(b));
 fprintf("Simpsion's 1/3rd Multi step: %f\n", simp_1_3_integral)

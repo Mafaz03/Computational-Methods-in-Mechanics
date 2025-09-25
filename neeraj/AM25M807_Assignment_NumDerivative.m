@@ -1,6 +1,6 @@
 %Roll number : AM25M807
 %Name : NIRAJ KUMAR SINGH
-%Assignment: Numerical Derivative Assighnment (Q1) 
+%Assignment: Numerical Derivative Assighnment 5 (Q1) 
 % -------------------------------
 %Clear workspace and command window
 

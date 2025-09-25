@@ -1,9 +1,16 @@
+%% Assignment
+% Differentation
+
+% Name        : Mohamed Mafaz
+% Roll Number : AM25M009
+% Department  : Applied Mechanics
+
+
 clc;
 clear;
 close all;
 
 f = @(x) cos(x); 
-% f = @(x) exp(-2*x) - x; 
 f_actual = @(x) -sin(x);
 x = 2;
 
@@ -27,6 +34,12 @@ end
 steps = 50;
 hs = logspace(-2, -10, steps);
 
+fx = zeros(1, steps);
+for i = 1:steps
+    fx(i) = f(hs(i));
+end
+
+
 error_forward = zeros(1, steps);
 error_backward = zeros(1, steps);
 error_central = zeros(1, steps);
@@ -44,6 +57,8 @@ for i = 1:steps
     error_central_h4(i)  = abs(centralVal_h4 - f_actual(x));
 end
 
+
+
 loglog(hs, error_forward, 'DisplayName', 'Forward error')
 hold on
 loglog(hs, error_backward, 'DisplayName', 'Backward error')
@@ -52,10 +67,15 @@ loglog(hs, error_central, 'DisplayName', 'Central error')
 hold on
 loglog(hs, error_central_h4, 'DisplayName', 'Central error O(h^4)')
 
-fprintf("O(h) Forward hopt: %d\n", min(error_forward));
-fprintf("O(h) Backward hopt: %d\n", min(error_backward))
-fprintf("O(h^2) Central hopt: %d\n", min(error_central))
-fprintf("O(h^4) Central hopt: %d\n", min(error_central_h4))
+[~, min_h_a] = min(error_forward);
+[~, min_h_b] = min(error_backward);
+[~, min_h_c] = min(error_central);
+[~, min_h_d] = min(error_central_h4);
+
+fprintf("O(h) Forward hopt error: %d min error: %d\n", hs(min_h_a), min(error_forward));
+fprintf("O(h) Backward hopt error: %d min error: %d\n", hs(min_h_b), min(error_backward))
+fprintf("O(h^2) Central hopt error: %d min error: %d\n", hs(min_h_c), min(error_central))
+fprintf("O(h^4) Central hopt error: %d min error: %d\n", hs(min_h_d), min(error_central_h4))
 
 
 
