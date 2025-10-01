@@ -1,5 +1,8 @@
 clc;
 clear;
+close all;
+
+answer = 0.74306944;
 
 % f =@(x) exp(-x^2);
 f =@(x) 1 / ((1+x^3)^0.5);
@@ -28,36 +31,62 @@ fprintf("Simpsion's 3/8th Single step: %f\n", simp_3_8_integral)
 %% Multiple Steps
 
 % Trapezoid
-M = 100;
-h = (b-a)/M;
-k_val = linspace(a, b, M);
+trap_mul_hs = [];
+trap_mul_errors = [];
+M = linspace(100, 200, 10);
 
-sum = 0;
-for k = 1:M-1
-    sum = sum + (   f(k_val(k))  +  f(k_val(k+1))   );
+% M = 100;
+for m = 1:length(M)
+    h = (b-a)/m;
+    trap_mul_hs(end+1) = h;
+    k_val = linspace(a, b, m);
+    
+    sum = 0;
+    for k = 1:m-1
+        sum = sum + (   f(k_val(k))  +  f(k_val(k+1))   );
+    end
+    trap_mul = (h/2) * sum;
+    trap_mul_errors(end+1) = abs(answer - trap_mul);
 end
-
-fprintf("\n\nTrapezoid Multi step: %f\n", (h/2) * sum)
+figure()
+plot(trap_mul_hs, trap_mul_errors)
+xlabel('h');
+ylabel('abs error');
+title("Trapezoid Multi-Step optimal h value")
+fprintf("\n\nTrapezoid Multi step: %f\n",trap_mul)
 
 
 % Simpsion's 1/3rd
-M = 200;
 
-n = 2 * M; % n = 2M
-k_val = linspace(a, b, n/2);
-h = (b-a)/M;
-sum = 0;
+simp_1_3_mul_hs = [];
+simp_1_3_mul_errors = [];
+M = linspace(100, 200, 10);
+for m = 1:length(M)
+    n = 2 * m; % n = 2M
+    k_val = linspace(a, b, n/2);
+    h = (b-a)/m;
+    simp_1_3_mul_hs(end+1) = h;
 
-for k = 1:n/2
-    if mod(k, 2) == 0
-        sum = sum + (2 * f(k_val(k)));
-    else
-        sum = sum + (4 * f(k_val(k)));
+    sum = 0;
+    
+    for k = 1:n/2
+        if mod(k, 2) == 0
+            sum = sum + (2 * f(k_val(k)));
+        else
+            sum = sum + (4 * f(k_val(k)));
+        end
     end
+    
+    simp_1_3_integral = (h/3) * (f(a) + sum + f(b));
+    simp_1_3_mul_errors(end+1) = abs(simp_1_3_integral-answer);
 end
-
-simp_1_3_integral = (h/3) * (f(a) + sum + f(b));
 fprintf("Simpsion's 1/3rd Multi step: %f\n\n\n", simp_1_3_integral)
+
+figure()
+plot(simp_1_3_mul_hs, simp_1_3_mul_errors)
+xlabel('h');
+ylabel('abs error');
+title("Simpsion's 1/3rd Multi-Step optimal h value")
 
 %% Gauss Legendre
 
@@ -69,7 +98,6 @@ x_2_2 = 1/sqrt(3);
 
 w_2_1 = 1;
 w_2_2 = 1;
-
 
 gl_2 = (w_2_1 * f_gl(x_2_1)) + (w_2_2 * f_gl(x_2_2));
 fprintf("Gauss Legendre 2 point: %f\n", gl_2)
@@ -86,7 +114,7 @@ w_3_3 = 5/9;
 gl_3 = (w_3_1 * f_gl(x_3_1)) + (w_3_2 * f_gl(x_3_2)) + (w_3_3 * f_gl(x_3_3));
 fprintf("Gauss Legendre 3 point: %f\n\n", gl_3)
 
-%% Adaptive Quadrature using Simpson's 1/3 Multi step method
+% Adaptive Quadrature using Simpson's 1/3 Multi step method
 tol = 1e-5;
 
 function [simp_1_3_integral, h] = Simposon1_3 (f, a, b)
@@ -95,7 +123,7 @@ function [simp_1_3_integral, h] = Simposon1_3 (f, a, b)
     k_val = linspace(a, b, n/2);
     h = (b-a)/M;
     sum = 0;
-    
+
     for k = 1:n/2
         if mod(k, 2) == 0
             sum = sum + (2 * f(k_val(k)));
@@ -103,7 +131,7 @@ function [simp_1_3_integral, h] = Simposon1_3 (f, a, b)
             sum = sum + (4 * f(k_val(k)));
         end
     end
-    
+
     simp_1_3_integral = (h/3) * (f(a) + sum + f(b));
 end
 
