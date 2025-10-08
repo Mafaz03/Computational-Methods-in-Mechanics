@@ -81,6 +81,7 @@ simp_1_3_mul_errors = [];
 % M = linspace(100, 1500, 10);
 
 
+
 for m = 1:length(M)
     n = 2 * round(M(m)); % must be even
 
