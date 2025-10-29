@@ -63,6 +63,7 @@ fprintf('Euler time: %f seconds\n', time_euler);
 % RK4 Method
 fprintf('Running RK4 method...\n');
 tic;
+
 for i = 1:N-1
     % k1
     k1x = fx_t(x_rk(i), y_rk(i));
